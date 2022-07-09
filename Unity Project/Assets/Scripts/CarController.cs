@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    private BoxCollider controller;
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
 
@@ -17,8 +16,6 @@ public class CarController : MonoBehaviour
 
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
-    [SerializeField] private float maxMotorForce;
-    [SerializeField] private float maxBreakForce;
     [SerializeField] private float maxSteerAngle;
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
@@ -31,25 +28,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
-    private void Start()
-    {
-        controller = GetComponent<BoxCollider>();
-    }
-
-    private void Update()
-    {
-        if (!PlayerManager.isGameStarted) return;
-
-        if (motorForce < maxMotorForce)
-            motorForce += 1.25f * Time.deltaTime;
-        if (breakForce < maxBreakForce)
-            breakForce += 3.75f * Time.deltaTime;
-    }
-
     private void FixedUpdate()
     {
-        if (!PlayerManager.isGameStarted) return;
-
         GetInput();
         HandleMotor();
         HandleSteering();
@@ -100,14 +80,7 @@ public class CarController : MonoBehaviour
         Vector3 pos;
         Quaternion rot; 
         wheelCollider.GetWorldPose(out pos, out rot);
-        wheelTransform.SetPositionAndRotation(pos, rot);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Obstacle")
-        {
-            PlayerManager.gameOver = true;
-        }
+        wheelTransform.rotation = rot;
+        wheelTransform.position = pos;
     }
 }
