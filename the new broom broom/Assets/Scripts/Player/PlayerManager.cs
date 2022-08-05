@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
 
+    public float gameSpeed;
+
     void Start()
     {
         gameOver = false; 
@@ -56,5 +58,13 @@ public class PlayerManager : MonoBehaviour
             isGameStarted = true;
             Destroy(startingText);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isGameStarted && !gameOver && Time.timeScale < 3) {
+            Time.timeScale += 0.00015f;
+            gameSpeed = Time.timeScale;
+        }   
     }
 }

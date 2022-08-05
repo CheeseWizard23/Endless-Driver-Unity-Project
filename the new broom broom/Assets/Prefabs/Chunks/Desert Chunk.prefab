@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 307333866685041326}
   - {fileID: 7528401928082433874}
-  - {fileID: 1435314430005501462}
+  - {fileID: 158970715750041327}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,7 +158,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5985184400516899429, guid: 37aec2476c561f54990b7352b698d0c6, type: 3}
   m_PrefabInstance: {fileID: 6290538043672717515}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8439784842464683979
+--- !u!1001 &7277718323898728242
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -214,9 +214,17 @@ PrefabInstance:
       value: Road Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Coin
+      value: 
+      objectReference: {fileID: 1001779904248625070, guid: d602768e9a3a6294ab3a4569b330189e, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
       propertyPath: Cone
       value: 
       objectReference: {fileID: 1983631605260006016, guid: 398d6f4e8602d894f953966451a1ffb9, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Road
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
       propertyPath: Chunk
       value: 
@@ -229,10 +237,30 @@ PrefabInstance:
       propertyPath: Roads.Array.data[0]
       value: 
       objectReference: {fileID: 3518747151101089350, guid: 3fceca2da0c880744a46174d50b930b0, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Obstacles.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Obstacles.Array.data[0]
+      value: 
+      objectReference: {fileID: 1001779904248625070, guid: d602768e9a3a6294ab3a4569b330189e, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Obstacles.Array.data[1]
+      value: 
+      objectReference: {fileID: 3713021733924812084, guid: 97b432ad2b475c54fba44b1909516e27, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: Obstacles.Array.data[2]
+      value: 
+      objectReference: {fileID: 1983631605260006016, guid: 398d6f4e8602d894f953966451a1ffb9, type: 3}
+    - target: {fileID: 8918548164411557326, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
+      propertyPath: numberOfMaxObstacleSegments
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
---- !u!4 &1435314430005501462 stripped
+--- !u!4 &158970715750041327 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7407120972910508509, guid: 4abb944e994d256498a484cf7bc91e53, type: 3}
-  m_PrefabInstance: {fileID: 8439784842464683979}
+  m_PrefabInstance: {fileID: 7277718323898728242}
   m_PrefabAsset: {fileID: 0}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CarController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class CarController : MonoBehaviour
     private bool isBreaking;
 
     public GameObject explosion;
+
+    private float lastPosition;
 
     [SerializeField] public float motorForce;
     [SerializeField] public float breakForce;
@@ -33,33 +36,55 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
+    private Rigidbody rb;
+    private float vel;
+
+    public TextMeshProUGUI warningText;
+    public int minSpeed;
+
     private void Start()
     {
         controller = GetComponent<BoxCollider>();
-    }
-
-    private void Update()
-    {
-        if (!PlayerManager.isGameStarted) return;
+        rb = GetComponent<Rigidbody>();
+        warningText.enabled = false;
     }
 
     private void FixedUpdate()
     {
-        if (!PlayerManager.isGameStarted) return;
+        if ((motorForce < maxMotorForce || breakForce < maxBreakForce) && PlayerManager.isGameStarted)
+        {
+            motorForce += 0.05f;
+            breakForce += 0.085f;
+        }
 
         GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
 
-    }
+        vel = rb.velocity.magnitude;
+        if ((gameObject.transform.position.y < -5 && PlayerManager.isGameStarted) || 
+            (vel <= minSpeed && PlayerManager.isGameStarted && gameObject.transform.position.z > -60 )) {
+            OnDeath();
+        }
 
+        if (vel < minSpeed+3 && vel > minSpeed && gameObject.transform.position.z > -72) {
+            warningText.enabled = true;
+        } else
+        {
+            warningText.enabled = false;
+        }
+    }
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxis(HORIZONTAL);
-        verticalInput = Input.GetAxis(VERTICAL);
-        isBreaking = Input.GetKey(KeyCode.Space);
+        if (PlayerManager.isGameStarted)
+        {
+            horizontalInput = Input.GetAxis(HORIZONTAL);
+            verticalInput = Input.GetAxis(VERTICAL);
+            isBreaking = Input.GetKey(KeyCode.DownArrow);
+        }
+        else return;
     }
 
     private void HandleMotor()
@@ -100,17 +125,21 @@ public class CarController : MonoBehaviour
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.SetPositionAndRotation(pos, rot);
     }
+    private void OnDeath()
+    {
+        GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+        Destroy(expl, 3);
+        PlayerManager.gameOver = true;
+        FindObjectOfType<AudioManager>().StopSound("MainTheme");
+        FindObjectOfType<AudioManager>().PlaySound("GameOver");
+    }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Obstacle" || collision.transform.tag == "Terrain")
         {
-            GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
-            Destroy(gameObject);
-            Destroy(expl, 3);
-            PlayerManager.gameOver = true;
-            FindObjectOfType<AudioManager>().StopSound("MainTheme");
-            FindObjectOfType<AudioManager>().PlaySound("GameOver");
+            OnDeath();
         }
     }
 }
